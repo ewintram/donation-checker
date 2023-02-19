@@ -1,0 +1,12 @@
+{
+  "name": "donation-checker-app",
+  "version": "1.0.0",
+  "description": "API to check number of donations given by a user",
+  "main": "dist/server.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node dist/server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
