@@ -9,5 +9,9 @@ export class DonationCheckerStack extends cdk.Stack {
 
     const vpc = new ec2.Vpc(this, "ProductionVpc");
     const cluster = new ecs.Cluster(this, "ProductionCluster", { vpc });
+    const taskDefinition = new ecs.FargateTaskDefinition(
+      this,
+      "DonationCheckerTaskDef"
+    );
   }
 }

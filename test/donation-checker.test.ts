@@ -13,12 +13,16 @@ describe('DonationCheckerStack', () => {
     template = Template.fromStack(stack);
   });
 
-  it('should create ecs cluster', () => {
+  it('should create production ecs cluster', () => {
     template.resourceCountIs('AWS::ECS::Cluster', 1);
   });
 
-  it('should create vpc', () => {
+  it('should create production vpc', () => {
     template.resourceCountIs('AWS::EC2::VPC', 1);
+  });
+
+  it('should create donation checker task def', () => {
+    template.resourceCountIs('AWS::ECS::TaskDefinition', 1);
   });
 });
 
