@@ -34,4 +34,8 @@ describe("DonationCheckerStack", () => {
   it("should create donation checker fargate service", () => {
     template.resourceCountIs("AWS::ECS::Service", 1);
   });
+
+  it("should create a production load balancer", () => {
+    template.resourceCountIs("AWS::ElasticLoadBalancingV2::LoadBalancer", 1);
+  });
 });

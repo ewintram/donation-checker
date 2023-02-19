@@ -1,6 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import * as ecs from "aws-cdk-lib/aws-ecs";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
+import * as ecsPatterns from "aws-cdk-lib/aws-ecs-patterns";
 import { Construct } from "constructs";
 
 export class DonationCheckerStack extends cdk.Stack {
@@ -9,18 +10,15 @@ export class DonationCheckerStack extends cdk.Stack {
 
     const vpc = new ec2.Vpc(this, "ProductionVpc");
     const cluster = new ecs.Cluster(this, "ProductionCluster", { vpc });
-    const taskDefinition = new ecs.FargateTaskDefinition(
+    new ecsPatterns.ApplicationLoadBalancedFargateService(
       this,
-      "DonationCheckerTaskDef"
+      "DonationCheckerService",
+      {
+        cluster,
+        taskImageOptions: {
+          image: ecs.ContainerImage.fromRegistry("amazon/amazon-ecs-sample"),
+        },
+      }
     );
-
-    taskDefinition.addContainer("DonationCheckerApi", {
-      image: ecs.ContainerImage.fromRegistry("amazon/amazon-ecs-sample"),
-    });
-
-    const service = new ecs.FargateService(this, "DonationCheckerService", {
-      cluster,
-      taskDefinition,
-    });
   }
 }
