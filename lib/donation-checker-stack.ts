@@ -16,7 +16,7 @@ export class DonationCheckerStack extends cdk.Stack {
       {
         cluster,
         taskImageOptions: {
-          image: ecs.ContainerImage.fromRegistry("amazon/amazon-ecs-sample"),
+          image: ecs.ContainerImage.fromAsset("./app/build"),
         },
       }
     );

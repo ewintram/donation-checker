@@ -1,7 +1,7 @@
 import express from "express";
 const app = express();
 
-const PORT = 8080;
+const PORT = 80;
 const HOST = "0.0.0.0";
 
 app.get("/", function (_, res) {

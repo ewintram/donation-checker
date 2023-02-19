@@ -11,6 +11,8 @@ TODO: Set account ID and region with variables
 * Install [Docker desktop](https://www.docker.com/products/docker-desktop/)
 * Install Node
 * Run `npm install`
+* The production Docker container builds from the dev container, so you must have gone through the dev set up before you can deploy
+
 ### Useful commands to deploy infrastructure
 
 * `cdk deploy`      deploy this stack
