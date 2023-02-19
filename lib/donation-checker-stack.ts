@@ -13,5 +13,14 @@ export class DonationCheckerStack extends cdk.Stack {
       this,
       "DonationCheckerTaskDef"
     );
+
+    taskDefinition.addContainer("DonationCheckerApi", {
+      image: ecs.ContainerImage.fromRegistry("amazon/amazon-ecs-sample"),
+    });
+
+    const service = new ecs.FargateService(this, "DonationCheckerService", {
+      cluster,
+      taskDefinition,
+    });
   }
 }
