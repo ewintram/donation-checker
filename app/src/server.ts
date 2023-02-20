@@ -29,7 +29,7 @@ server.get("/users/:userId", (req, res) => {
     logger.error(message);
     res.status(404).json({ error: message });
   } else {
-    res.json(user);
+    res.json({ id: user.id, donationCount: user.donationCount });
   }
 });
 

@@ -7,6 +7,7 @@ services:
     volumes:
       - .:/app
       - ./dist:/app/dist
+      - "$HOME/.aws:/root/.aws:ro"
     ports:
       - 3000:80
     entrypoint: "npm run dev"
