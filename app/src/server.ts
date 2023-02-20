@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { getUserById } from "./UsersRepository";
 import { logger, httpLogger } from "./Loggers";
+import { sendSms } from "./Services/SNS";
 
 const server = express();
 server.use(express.json());
@@ -28,9 +29,16 @@ server.get("/users/:userId", (req, res) => {
     const message = `User does not exist with ID ${userId}`;
     logger.error(message);
     res.status(404).json({ error: message });
-  } else {
-    res.json({ id: user.id, donationCount: user.donationCount });
+    return;
   }
+  if (user.donationCount >= 2) {
+    try {
+      sendSms(user.phoneNumber);
+    } catch {
+      logger.error(`Failed to send SMS to user with ID ${user.id}`);
+    }
+  }
+  res.json({ id: user.id, donationCount: user.donationCount });
 });
 
 if (process.env.NODE_ENV !== "test") {
