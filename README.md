@@ -13,6 +13,7 @@ The application runs in Docker in both dev and production.
 
 * `make test`        to run automated tests for the app
 * `make shell`       to enter the container
+* `make logs`        to tail the container logs
 * `make down`        to stop the container
 
 

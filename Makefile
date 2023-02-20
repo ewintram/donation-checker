@@ -11,3 +11,6 @@ shell:
 .PHONY: test
 test:
 	docker exec -it donation-checker-api sh -c "npm test -- $(filter)"
+
+logs:
+	docker logs donation-checker-api -f --tail=20
