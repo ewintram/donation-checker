@@ -20,6 +20,28 @@ describe("GET users/:userId", () => {
   it("should return 404 user id does not exist", () => {
     return request(server)
       .get("/users/10")
-      .expect(404);
+      .expect("Content-Type", /json/)
+      .expect(404)
+      .then((response) => {
+        expect(response.body).toEqual(
+          expect.objectContaining({
+            error: "User does not exist with this ID",
+          })
+        );
+      });
+  });
+
+  it("should return 400 user id is not a number", () => {
+    return request(server)
+      .get("/users/a")
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .then((response) => {
+        expect(response.body).toEqual(
+          expect.objectContaining({
+            error: "User ID must be a number",
+          })
+        );
+      });
   });
 });
