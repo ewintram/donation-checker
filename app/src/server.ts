@@ -3,6 +3,8 @@ import cors from "cors";
 import { getUserById } from "./UsersRepository";
 import { logger, httpLogger } from "./Loggers";
 import { sendSms } from "./Services/SNS";
+import { setItems } from "./Services/Cache";
+import { USERS } from "./Services/Cache/USERS";
 
 const server = express();
 server.use(express.json());
@@ -11,6 +13,8 @@ server.use(httpLogger);
 
 const PORT = 80;
 const HOST = "0.0.0.0";
+// Populates the cache on start
+setItems(USERS);
 
 server.get("/", (_, res) => {
   res.send("Hello World!!");
