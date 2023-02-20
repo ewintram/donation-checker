@@ -1,16 +1,11 @@
 import express from "express";
 import cors from "cors";
-import morgan from "morgan";
 import { getUserById } from "./UsersRepository";
-import logger from "./logger";
+import { logger, httpLogger } from "./Loggers";
 
 const server = express();
 server.use(express.json());
 server.use(cors());
-
-const httpLogger = morgan("short", {
-  skip: () => process.env.NODE_ENV === "test",
-});
 server.use(httpLogger);
 
 const PORT = 80;
