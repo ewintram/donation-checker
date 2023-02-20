@@ -25,7 +25,7 @@ describe("GET users/:userId", () => {
       .then((response) => {
         expect(response.body).toEqual(
           expect.objectContaining({
-            error: "User does not exist with this ID",
+            error: "User does not exist with ID 10",
           })
         );
       });
@@ -39,7 +39,7 @@ describe("GET users/:userId", () => {
       .then((response) => {
         expect(response.body).toEqual(
           expect.objectContaining({
-            error: "User ID must be a number",
+            error: "User ID must be a number. a is not a number.",
           })
         );
       });

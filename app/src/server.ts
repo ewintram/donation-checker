@@ -14,13 +14,15 @@ server.get("/", (_, res) => {
 server.get("/users/:userId", (req, res) => {
   const { userId } = req.params;
   if (isNaN(Number(userId))) {
-    res.status(400).json({ error: "User ID must be a number" });
+    res.status(400).json({ error: `User ID must be a number. ${userId} is not a number.` });
+    return;
   }
   const user = getUserById(Number(userId));
   if (!user) {
-    res.status(404).json({ error: "User does not exist with this ID" });
+    res.status(404).json({ error: `User does not exist with ID ${userId}` });
+  } else {
+    res.json(user);
   }
-  res.json(user);
 });
 
 if (process.env.NODE_ENV !== "test") {
