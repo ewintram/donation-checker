@@ -7,3 +7,7 @@ down:
 
 shell:
 	docker exec -it donation-checker-api sh
+
+.PHONY: test
+test:
+	docker exec -it donation-checker-api sh -c "npm test -- $(filter)"

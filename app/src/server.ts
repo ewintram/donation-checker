@@ -17,6 +17,7 @@ server.get("/users/:userId", (req, res) => {
   if (user) {
     res.send(user);
   }
+  res.sendStatus(404);
 });
 
 if (process.env.NODE_ENV !== "test") {

@@ -2,7 +2,7 @@ import server from "../server";
 import request from "supertest";
 
 describe("GET users/:userId", () => {
-  it("should return user donation count if user id exists", () => {
+  it("should return user if user id exists", () => {
     return request(server)
       .get("/users/1")
       .expect("Content-Type", /json/)
@@ -15,5 +15,11 @@ describe("GET users/:userId", () => {
           })
         );
       });
+  });
+
+  it("should return 404 user id does not exist", () => {
+    return request(server)
+      .get("/users/10")
+      .expect(404);
   });
 });
