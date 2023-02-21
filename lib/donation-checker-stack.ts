@@ -15,7 +15,7 @@ export class DonationCheckerStack extends cdk.Stack {
 
     const asset = new ecrAssets.DockerImageAsset(this, "DonationCheckerImage", {
       directory: path.join(__dirname, "../app/build"),
-      extraHash: `${Date.now()}`
+      extraHash: `${Date.now()}`,
     });
 
     new ecsPatterns.ApplicationLoadBalancedFargateService(

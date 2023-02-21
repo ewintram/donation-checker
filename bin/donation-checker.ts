@@ -5,5 +5,8 @@ import { DonationCheckerStack } from "../lib/donation-checker-stack";
 
 const app = new cdk.App();
 new DonationCheckerStack(app, "DonationCheckerStack", {
-  env: { account: "549823983155", region: "eu-west-1" },
+  env: {
+    account: process.env.CDK_DEFAULT_ACCOUNT,
+    region: process.env.CDK_DEFAULT_REGION,
+  },
 });
