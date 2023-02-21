@@ -82,4 +82,22 @@ describe("GET users/:userId", () => {
     await request(server).get("/users/2");
     expect(spySendSms).not.toHaveBeenCalled();
   });
+
+  it("should not return user if sending SMS fails", async () => {
+    spyNodeCache.mockReturnValue({
+      id: 1,
+      donationCount: 2,
+      phoneNumber: "123",
+    });
+    spySendSms.mockImplementation(() => { throw new Error() });
+    const response = await request(server)
+      .get("/users/1")
+      .expect("Content-Type", /json/)
+      .expect(200);
+
+    expect(response.body).toEqual({
+      id: 1,
+      donationCount: 2,
+    });
+  });
 });
