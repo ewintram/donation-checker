@@ -46,13 +46,20 @@ The infrastructure for this API is deployable via [aws-cdk](https://docs.aws.ama
 * I thought that the VPC and Cluster might be in a separate stack, in order to be deployed separately and shared across multiple projects, but I didn't have time to explore this
 * The most challenging part was understanding the concept of deploying the infrastructure with the app. For example, the recommended approach was to deploy the Docker image as an asset, but this does not deploy it to ECR as an image but instead within the assets repository for the stack
 
+
 ### Scalability considerations
 
-*
+* I would apply an autoscaling policy on the ECS containers based on the CPU and memory usage metrics reported by AWS Cloudwatch to scale up the number of containers when the API is in high demand, and then scale down instances when not required, in order to keep costs low
+* The stack includes a load balancer to split traffic evenly across services
+* I would deploy the stack to specific AWS regions if the API was going to be used by users from those regions if latency was an issue
+
 
 ### Logging and monitoring in production
 
-https://docs.aws.amazon.com/AmazonECS/latest/userguide/monitoring-automated-manual.html
+* I would ensure that application logs are able to be monitored following deployments either in CloudWatch logs or another provider e.g. DataDog
+* I would set up alerts (whether in AWS CloudWatch alarms or DataDog monitors) to notify engineers of certain errors being over a normal threshold (determined by monitoring normal usage for a short time after first launch), e.g. is the SMS message sends were failing more frequently than usual
+* I would utilise dashboards to track service health status, CPU and memory usage in graphs so that any anomolies can be spotted more quickly
+
 
 ### Deployment pipeline
 
