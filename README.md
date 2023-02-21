@@ -42,6 +42,7 @@ The infrastructure for this API is deployable via [aws-cdk](https://docs.aws.ama
 ### Stack architecture
 
 * I chose to deploy a Docker container to ECS as this enabled me to build the app easily in dev in a Docker container
+* I chose to build a simple Express REST API which can easily be consumed by any client
 + I chose Fargate launch type for its lower overhead and cost 
 * I thought that the VPC and Cluster might be in a separate stack, in order to be deployed separately and shared across multiple projects, but I didn't have time to explore this
 * The most challenging part was understanding the concept of deploying the infrastructure with the app. For example, the recommended approach was to deploy the Docker image as an asset, but this does not deploy it to ECR as an image but instead within the assets repository for the stack
@@ -49,7 +50,7 @@ The infrastructure for this API is deployable via [aws-cdk](https://docs.aws.ama
 
 ### Scalability considerations
 
-* I would apply an autoscaling policy on the ECS containers based on the CPU and memory usage metrics reported by AWS Cloudwatch to scale up the number of containers when the API is in high demand, and then scale down instances when not required, in order to keep costs low
+* I would apply an autoscaling policy on the ECS containers based on the CPU and memory usage metrics reported by AWS Cloudwatch to scale up the number of containers when the API is in high demand, and then scale down instances when CPU/memory returns to a lower usage, in order to keep costs low
 * The stack includes a load balancer to split traffic evenly across services
 * I would deploy the stack to specific AWS regions if the API was going to be used by users from those regions if latency was an issue
 
@@ -57,7 +58,7 @@ The infrastructure for this API is deployable via [aws-cdk](https://docs.aws.ama
 ### Logging and monitoring in production
 
 * I would ensure that application logs are able to be monitored following deployments either in CloudWatch logs or another provider e.g. DataDog
-* I would set up alerts (whether in AWS CloudWatch alarms or DataDog monitors) to notify engineers of certain errors being over a normal threshold (determined by monitoring normal usage for a short time after first launch), e.g. is the SMS message sends were failing more frequently than usual
+* I would set up alerts (whether in AWS CloudWatch alarms or DataDog monitors) to notify engineers of certain errors being over a normal threshold (determined by monitoring normal usage for a short time after first launch), e.g. in the scenario where the SMS message sends were failing more frequently than usual
 * I would utilise dashboards to track service health status, CPU and memory usage in graphs so that any anomolies can be spotted more quickly
 
 
@@ -65,7 +66,7 @@ The infrastructure for this API is deployable via [aws-cdk](https://docs.aws.ama
 
 * I would create separate AWS accounts for staging and production in order to deploy the same stack into different environments
 * The pipeline could be created with AWS CDK Pipeline with a Stage for each environment so that deployments can be automated and managed remotely
-* There was no need for environment variables within the application at this stage but I would load environment files into the Docker containers and pull any secrets into the ECS containers via AWS CDK in staging and production
+* There was no need for environment variables within the application at this point but I would load environment files into the Docker containers and pull any secrets from SSM into the ECS containers via AWS CDK in staging and production deployments
 
 
 
