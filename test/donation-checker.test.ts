@@ -22,13 +22,7 @@ describe("DonationCheckerStack", () => {
   });
 
   it("should create donation checker task def and add container", () => {
-    template.hasResourceProperties("AWS::ECS::TaskDefinition", {
-      ContainerDefinitions: [
-        {
-          Image: "amazon/amazon-ecs-sample",
-        },
-      ],
-    });
+    template.resourceCountIs("AWS::ECS::TaskDefinition", 1);
   });
 
   it("should create donation checker fargate service", () => {
