@@ -43,6 +43,7 @@ The infrastructure for this API is deployable via [aws-cdk](https://docs.aws.ama
 ### Stack architecture
 
 * I chose to deploy a Docker container to ECS as this enabled me to build the app easily in dev in a Docker container. I also tried to Dockerise the CDK project but was unable to as a Docker engine is required in order to build the image asset if it is built from a local file
+* I used NodeCache to store the users for the scope of the task but would use a relational database in AWS if this API was live
 * I chose to build a simple Express REST API which can easily be consumed by any client
 + I chose Fargate launch type for its lower overhead and cost 
 * I thought that the VPC and Cluster might be in a separate stack, in order to be deployed separately and shared across multiple projects, but I didn't have time to explore this
